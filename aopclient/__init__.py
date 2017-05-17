@@ -1,4 +1,4 @@
 #!/usr/bin/env python
 
-from aopclient.apiclient import AOPClient
+from aopclient.apiclient import AOLClient
 
