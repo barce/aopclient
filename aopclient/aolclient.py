@@ -22,7 +22,9 @@ except ImportError:
 class AOLClient:
   client_id = None
   client_secret = None
-  host = None
+  api_key = None
+  id_host = None
+  one_host = None
   aud = None
   payload = None
   encoded_payload = None
@@ -30,17 +32,29 @@ class AOLClient:
   payload_url = None
   headers = None
   authorized_headers = None
+  token = None
+
+
+  def __init__(self):
+    self.client_id = os.environ['AOP_CLIENT_ID']
+    self.client_secret = os.environ['AOP_CLIENT_SECRET']
+    self.api_key = os.environ['AOP_API_KEY']
+    self.id_host = os.environ['AOP_ID_HOST']
+    self.one_host = os.environ['AOP_ONE_HOST']
+
 
   def show_config(self):
     print(self.client_id)
     print(self.client_secret)
-    print(self.host)
+    print(self.api_key)
+    print(self.id_host)
+    print(self.one_host)
 
 
   def set_payload(self):
     now = int(time.time())
-    self.payload = = {
-      "aud": "https://{0}/identity/oauth2/access_token?realm=aolcorporate/aolexternals".format(self.host),
+    self.payload = {
+      "aud": "https://{0}/identity/oauth2/access_token?realm=aolcorporate/aolexternals".format(self.id_host),
       "iss": self.client_id,
       "sub": self.client_id,
       "exp": now + 3600,
@@ -54,10 +68,11 @@ class AOLClient:
 
 
   def set_oauth_url(self):
-    self.oauth_url = "https://{0}/identity/oauth2/access_token".format(host)
+    self.oauth_url = "https://{0}/identity/oauth2/access_token".format(self.id_host)
 
   def set_payload_url(self):
-    self.payload_url = "grant_type=client_credentials&scope=one&realm=aolcorporate/aolexternals&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&client_assertion={0}".format(encoded)
+    self.payload_url = "grant_type=client_credentials&scope=one&realm=aolcorporate/aolexternals&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&client_assertion={0}".format(self.encoded_payload)
+    return self.payload_url
 
   def set_headers(self):
     self.headers = {
@@ -66,10 +81,18 @@ class AOLClient:
     }
 
   def get_token(self):
-    response = requests.post(self.oauth_url, headers=self.headers, data=self.encoded_payload)
+    response = requests.post(self.oauth_url, headers=self.headers, data=self.payload_url)
     json_response = json.loads(response.text)
-    self.authorized_headers = {'Authorization': "Bearer " + json_response['access_token']}
+    print(json_response)
+    self.token = json_response['access_token']
+    self.authorized_headers = {'Authorization': "Bearer " + self.token}
 
     self.authorized_headers['Content-Type'] = 'application/json'
-    self.authorized_headers['x-api-key'] = os.environ['AOP_API_KEY']
+    self.authorized_headers['x-api-key'] = self.api_key
+
+  def get_organizations(self):
+    url = "https://{0}/advertiser/organization-management/v1/organizations/".format(self.one_host)
+    response = requests.get(url, headers=self.authorized_headers, verify=False)
+    return response.text
+
 
