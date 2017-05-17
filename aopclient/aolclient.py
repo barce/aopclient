@@ -19,8 +19,13 @@ except ImportError:
     use_environment_variables = True
 
 
-class APIClient:
+class AOLClient:
   client_id = None
   client_secret = None
+  host = None
 
+  def show_config(self):
+    print(self.client_id)
+    print(self.client_secret)
+    print(self.host)
 
