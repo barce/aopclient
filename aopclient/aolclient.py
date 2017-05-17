@@ -71,7 +71,7 @@ class AOLClient:
     self.oauth_url = "https://{0}/identity/oauth2/access_token".format(self.id_host)
 
   def set_payload_url(self):
-    self.payload_url = "grant_type=client_credentials&scope=one&realm=aolcorporate/aolexternals&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&client_assertion={0}".format(self.encoded_payload)
+    self.payload_url = "grant_type=client_credentials&scope=one&realm=aolcorporate/aolexternals&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&client_assertion={0}".format(bytes.decode(self.encoded_payload))
     return self.payload_url
 
   def set_headers(self):
@@ -93,6 +93,21 @@ class AOLClient:
   def get_organizations(self):
     url = "https://{0}/advertiser/organization-management/v1/organizations/".format(self.one_host)
     response = requests.get(url, headers=self.authorized_headers, verify=False)
-    return response.text
+    return json.loads(response.text)
 
+  def get_campaigns(self, org_id=0):
+    url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/campaigns".format(self.one_host, org_id)
+    response = requests.get(url, headers=self.authorized_headers, verify=False)
+    return json.loads(response.text)
+
+
+  def get_campaigns_by_advertiser(self, org_id=0, ad_id=0):
+    url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns".format(self.one_host, org_id, ad_id)
+    response = requests.get(url, headers=self.authorized_headers, verify=False)
+    return json.loads(response.text)
+
+  def get_campaigns_by_advertiser_by_campaign(self, org_id=0, ad_id=0, campaign_id=0):
+    url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}".format(self.one_host, org_id, ad_id, campaign_id)
+    response = requests.get(url, headers=self.authorized_headers, verify=False)
+    return json.loads(response.text)
 
