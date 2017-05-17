@@ -54,7 +54,7 @@ print "TOKEN",json_response
 headers = {'Authorization': "Bearer " + json_response['access_token']}
 #headers = {'Authorization': json_response['access_token']}                                                                                                                                               
 headers['Content-Type'] = 'application/json'
-headers['x-api-key'] = 'XlcRtA3hxcTDxwBvT3Nv9ra0BwPHxLe4N9xYYNn7'
+headers['x-api-key'] = os.environ['AOP_API_KEY']
 
 print "HEADERS",headers
 
