@@ -42,6 +42,13 @@ class AOLClient:
     self.id_host = os.environ['AOP_ID_HOST']
     self.one_host = os.environ['AOP_ONE_HOST']
 
+  def connect(self):
+    self.set_payload()
+    self.encode_payload()
+    self.set_oauth_url()
+    self.set_payload_url()
+    self.set_headers()
+    return self.get_token()
 
   def show_config(self):
     print(self.client_id)
