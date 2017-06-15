@@ -27,14 +27,14 @@ payload = {
 
 encoded = jwt.encode(payload, client_secret, algorithm='HS256')
 
-print "ENC",encoded
+print("ENC",encoded)
 
 
 url = "https://{0}/identity/oauth2/access_token".format(host)
 
 payload = "grant_type=client_credentials&scope=one&realm=aolcorporate/aolexternals&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&client_assertion={0}".format(encoded)
 
-print "URL",url
+print("URL",url)
 
 headers = {
     "Content-Type": "application/x-www-form-urlencoded",
@@ -44,38 +44,38 @@ headers = {
 response = requests.post(url, headers=headers, data=payload)
 
 
-print "RESPONSE",response.text
+print("RESPONSE",response.text)
 
 
 json_response = json.loads(response.text)
 
-print "TOKEN",json_response
+print("TOKEN",json_response)
 
 headers = {'Authorization': "Bearer " + json_response['access_token']}
 #headers = {'Authorization': json_response['access_token']}                                                                                                                                               
 headers['Content-Type'] = 'application/json'
 headers['x-api-key'] = os.environ['AOP_API_KEY']
 
-print "HEADERS",headers
+print("HEADERS",headers)
 
 url = "https://api.one.aol.com/advertiser/organization-management/v1/organizations/"
 
 response = requests.get(url, headers=headers, verify=False)
-print "RESPONSE",response.text
+print("RESPONSE",response.text)
 
 url = "https://api.one.aol.com/advertiser/campaign-management/v1/organizations/{0}/advertisers/campaigns".format("7000095690")
 
 response = requests.get(url, headers=headers, verify=False)
 
 
-print "RESPONSE 2",response.text
+print("RESPONSE 2",response.text)
 
 
 url = "https://api.one.aol.com/advertiser/campaign-management/v1/organizations/{0}/advertisers/{1}/campaigns".format("7000095690", "7000095690")
 
 response = requests.get(url, headers=headers, verify=False)
 
-print "RESPONSE 2.5",response.text
+print("RESPONSE 2.5",response.text)
 
 
 
@@ -83,7 +83,7 @@ url = "https://api.one.aol.com/advertiser/campaign-management/v1/organizations/{
 
 response = requests.get(url, headers=headers, verify=False)
 
-print "RESPONSE 3",response.text
+print("RESPONSE 3",response.text)
 
 
 
