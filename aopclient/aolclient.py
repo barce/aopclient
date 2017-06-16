@@ -127,3 +127,8 @@ class AOLClient:
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
     response = requests.get(url, headers=self.authorized_headers, verify=False)
     return json.loads(response.text)
+
+  def get_creative_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0):
+    url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/creativeassignments".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
+    response = requests.get(url, headers=self.authorized_headers, verify=False)
+    return json.loads(response.text)
