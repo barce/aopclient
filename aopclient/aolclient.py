@@ -135,13 +135,13 @@ class AOLClient:
     print("{}".format(json.loads(response.text)))
     return json.loads(response.text)
 
-def get_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0):
+  def get_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/dealassignments".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
     response = requests.get(url, headers=self.authorized_headers, verify=False)
     print("{}".format(json.loads(response.text)))
     return json.loads(response.text)
 
-def assign_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, deals=[]):
+  def assign_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, deals=[]):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/dealassignments".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
     data = HTTPHeaderDict()
     for deal in deals:
@@ -150,7 +150,7 @@ def assign_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0,
     print("{}".format(json.loads(response.text)))
     return json.loads(response.text)
 
-def unassign_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, deals=[]):
+  def unassign_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, deals=[]):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/dealassignments".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
     data = HTTPHeaderDict()
     for deal in deals:
@@ -160,13 +160,13 @@ def unassign_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=
     return json.loads(response.text)
 
 
-def get_flight_by_id(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, flight_id=0):
+  def get_flight_by_id(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, flight_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/flights/{5}".format(self.one_host, org_id, ad_id, campaign_id, tactic_id, flight_id)
     response = requests.get(url, headers=self.authorized_headers, verify=False)
     return json.loads(response.text)
 
 
-def get_flights_by_tactic_id(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0):
+  def get_flights_by_tactic_id(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/flights".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
     response = requests.get(url, headers=self.authorized_headers, verify=False)
     return json.loads(response.text)
