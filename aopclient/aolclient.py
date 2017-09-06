@@ -173,8 +173,12 @@ class AOLClient:
     response = requests.get(url, headers=self.authorized_headers, verify=True)
     return json.loads(response.text)
 
-  def get_private_deals_by_advertiser(self, org_id=0, ad_id=0):
+  def get_private_deals_by_advertiser(self, org_id=0, ad_id=0, limit=0, offset=0):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/deals".format(self.one_host, org_id, ad_id)
+    if limit > 0 or offset > 0:
+        url = url + "?limit={0}&offset={1}".format(limit, offset)
+        
+        
     response = requests.get(url, headers=self.authorized_headers, verify=True)
     return json.loads(response.text)
     
