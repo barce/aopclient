@@ -176,10 +176,15 @@ class AOLClient:
   def get_private_deals_by_advertiser(self, org_id=0, ad_id=0, limit=0, offset=0):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/deals".format(self.one_host, org_id, ad_id)
     if limit > 0 or offset > 0:
-        url = url + "?limit={0}&offset={1}".format(limit, offset)
-        
-        
+        url = url + "?limit={0}&offset={1}".format(limit, offset)        
     response = requests.get(url, headers=self.authorized_headers, verify=True)
     return json.loads(response.text)
-    
+
+  def get_private_deal_assignments_by_tactic(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, limit=0, offset=0):
+    url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/dealassignments".format(self.one_host, org_id, ad_id, campaign_id, tactic_id, limit, offset)
+    if limit > 0 or offset > 0:
+        url = url + "?limit={0}&offset={1}".format(limit, offset)        
+    response = requests.get(url, headers=self.authorized_headers, verify=True)
+    return json.loads(response.text)
+
 # eof
