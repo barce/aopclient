@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='aopclient',
-    version='1.0.3',
+    version='1.0.4',
     author='Jim Barcelona, Arun Suresh',
     author_email='barce@me.com, arunvsuresh@gmail.com',
     packages=['aopclient', 'aopclient.tests'],
