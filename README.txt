@@ -16,3 +16,6 @@ tactics = client.get_tactics_by_campaign(org_id, ad_id, campaign_id)
 creatives = client.get_creative_assignments(org_id, ad_id, campaign_id, tactic_id)
 private_deal_assignments = client.get_deal_assignments(org_id, ad_id, campaign_id, tactic_id)
 flights = client.get_flights_by_tactic_id(7000038774, 7000052577, 5969, 355426) # (org_id, ad_id, campaign_id, tactic_id)
+
+
+advertiser = client.get_advertiser(7000095690, 7000092141) # (org_id, ad_id)

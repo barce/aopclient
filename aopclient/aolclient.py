@@ -105,11 +105,26 @@ class AOLClient:
     response = self._send_request(url, self.authorized_headers, method="GET")
     return json.loads(response.text)
 
+  def get_organization(self, id):
+    url = "https://{0}/advertiser/organization-management/v1/organizations/{1}".format(self.one_host, id)
+    response = self._send_request(url, self.authorized_headers, method="GET")
+    return json.loads(response.text)
+      
+
+  def get_advertisers(self, org_id=0):
+    url = "https://{0}/advertiser/advertiser-management/v1/organizations/{1}/advertisers".format(self.one_host, org_id)
+    response = self._send_request(url, self.authorized_headers, method="GET")
+    return json.loads(response.text)
+
+  def get_advertiser(self, org_id=0, ad_id=0):
+    url = "https://{0}/advertiser/advertiser-management/v1/organizations/{1}/advertisers/{2}".format(self.one_host, org_id, ad_id)
+    response = self._send_request(url, self.authorized_headers, method="GET")
+    return json.loads(response.text)
+
   def get_campaigns(self, org_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/campaigns".format(self.one_host, org_id)
     response = self._send_request(url, self.authorized_headers, method="GET")
     return json.loads(response.text)
-
 
   def get_campaigns_by_advertiser(self, org_id=0, ad_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns".format(self.one_host, org_id, ad_id)
@@ -229,7 +244,7 @@ class AOLClient:
     response = self._send_request(url, self.authorized_headers, method="GET")
     return json.loads(response.text)
 
-def get_apps_by_whitelist(self, org_id=0, ad_id=0, whitelist_id=0, limit=0, offset=0):
+  def get_apps_by_whitelist(self, org_id=0, ad_id=0, whitelist_id=0, limit=0, offset=0):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/whitelists/{3}/apps".format(self.one_host, org_id, ad_id, whitelist_id, limit, offset)
     if limit > 0 or offset > 0:
         url = url + "?limit={0}&offset={1}".format(limit, offset)        
