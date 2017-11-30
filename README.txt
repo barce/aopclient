@@ -1,6 +1,12 @@
 # aopclient
 Client for the AOP
 
+# To run tests:
+Clone this repository, and then:
+cd aopclient
+pip install pytest
+pytest
+
 Sample code:
 
 
