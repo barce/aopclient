@@ -334,9 +334,21 @@ class AOLClient:
 
       if method == "POST":
           response = requests.post(url, headers=headers, verify=True, data=data)
+          print('--- headers ---')
+          print(headers)
+          print('--- headers ---')
+          print('--- data ---')
+          print(data)
+          print('--- data ---')
 
       if method == "PUT":
           response = requests.put(url, headers=headers, verify=True, data=data)
+          print('--- headers ---')
+          print(headers)
+          print('--- headers ---')
+          print('--- data ---')
+          print(data)
+          print('--- data ---')
 
       print('--- response.status_code: {} ---'.format(response.status_code))
       codes = [200,201]
