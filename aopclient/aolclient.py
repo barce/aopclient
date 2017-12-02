@@ -211,33 +211,27 @@ class AOLClient:
 
   def create_blacklist_by_advertiser(self, org_id=0, ad_id=0, name='', domains=[], apps=[], default=False):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/blacklists".format(self.one_host, org_id, ad_id)
-    data = HTTPHeaderDict()
-    data.add('name', name)
-    data.add('domains', json.dumps(domains))
-    data.add('apps', json.dumps(apps))
-    data.add('default', json.dumps(default))
-    print('--- data ---')
-    print(str(data))
-    print('--- data ---')
-    response = self._send_request(url, self.authorized_headers, method="POST", data=data)
+    data = {}
+    data['name'] = name
+    data['domains'] = domains
+    data['apps'] = apps
+    data['default'] = default
+    response = self._send_request(url, self.authorized_headers, method="POST", data=json.dumps(data))
     return json.loads(response.text)
 
   def update_blacklist_by_advertiser(self, org_id=0, ad_id=0, blacklist_id=0, op='REPLACE', path='/name', value=''):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/blacklists".format(self.one_host, org_id, ad_id, blacklist_id)
-    data = HTTPHeaderDict()
-    data.add('op', op)
-    data.add('path', path)
-    data.add('value', value)
-    print('--- data ---')
-    print(str(data))
-    print('--- data ---')
-    response = self._send_request(url, self.authorized_headers, method="PUT", data=data)
+    data = {}
+    data['op'] = op
+    data['path'] = path
+    data['value'] = value
+    response = self._send_request(url, self.authorized_headers, method="PUT", data=json.dumps(data))
     return json.loads(response.text)
     
   def update_tactics_blacklist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, blacklist_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/blacklists".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
-    data = HTTPHeaderDict()
-    data.add('blacklistid', blacklist_id)
+    data = {}
+    data['blacklistid'] = blacklist_id
     response = self._send_request(url, self.authorized_headers, method="PUT", data=data)
 
   def get_blacklists_by_tactic(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, limit=0, offset=0):
@@ -277,34 +271,28 @@ class AOLClient:
 
   def create_whitelist_by_advertiser(self, org_id=0, ad_id=0, name='', domains=[], apps=[], default=False):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/whitelists".format(self.one_host, org_id, ad_id)
-    data = HTTPHeaderDict()
-    data.add('name', name)
-    data.add('domains', json.dumps(domains))
-    data.add('apps', json.dumps(apps))
-    data.add('default', json.dumps(default))
-    print('--- data ---')
-    print(str(data))
-    print('--- data ---')
-    response = self._send_request(url, self.authorized_headers, method="POST", data=data)
+    data = {}
+    data['name'] =  name
+    data['domains'] = domains
+    data['apps'] = apps
+    data['default'] = default
+    response = self._send_request(url, self.authorized_headers, method="POST", data=json.dumps(data))
     return json.loads(response.text)
 
   def update_whitelist_by_advertiser(self, org_id=0, ad_id=0, whitelist_id=0, op='REPLACE', path='/name', value=''):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/whitelists".format(self.one_host, org_id, ad_id, whitelist_id)
-    data = HTTPHeaderDict()
-    data.add('op', op)
-    data.add('path', path)
-    data.add('value', value)
-    print('--- data ---')
-    print(str(data))
-    print('--- data ---')
-    response = self._send_request(url, self.authorized_headers, method="PUT", data=data)
+    data = {}
+    data['op'] = op
+    data['path'] = path
+    data['value'] = value
+    response = self._send_request(url, self.authorized_headers, method="PUT", data=json.dumps(data))
     return json.loads(response.text)
 
   def update_tactics_whitelist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, whitelist_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/whitelists".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
-    data = HTTPHeaderDict()
-    data.add('whitelistid', whitelist_id)
-    response = self._send_request(url, self.authorized_headers, method="PUT", data=data)
+    data = {}
+    data['whitelistid'] = whitelist_id
+    response = self._send_request(url, self.authorized_headers, method="PUT", data=json.dump(data))
 
   def get_apps_by_whitelist(self, org_id=0, ad_id=0, whitelist_id=0, limit=0, offset=0):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/whitelists/{3}/apps".format(self.one_host, org_id, ad_id, whitelist_id, limit, offset)
@@ -347,7 +335,12 @@ class AOLClient:
       if method == "POST":
           response = requests.post(url, headers=headers, verify=True, data=data)
 
-      if response.status_code != 200:
+      if method == "PUT":
+          response = requests.put(url, headers=headers, verify=True, data=data)
+
+      print('--- response.status_code: {} ---'.format(response.status_code))
+      codes = [200,201]
+      if (response.status_code in codes) != True:
           message = ""
           try:
               message = json.loads(response.text)['message']
