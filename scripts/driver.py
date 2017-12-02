@@ -10,7 +10,12 @@ client.connect()
 # client.get_campaigns_by_advertiser(7000095690, 7000095690)
 # client.get_campaigns_by_advertiser_by_campaign(7000095690, 7000095690, 131210756)
 
+print(' ')
+print(' ')
+print(' ')
 
+print('------ create whitelist ------')
+print(' ')
 now = datetime.datetime.now()
 name = 'two domains - {}'.format(now)
 domains = ['https://www.google.com', 'https://slashdot.org']
@@ -18,7 +23,13 @@ apps = []
 default = False
 result = client.create_whitelist_by_advertiser(7000095690, 7000095690, name, domains, apps, default)
 print(result)
+print('------ create whitelist ------')
+print(' ')
+print(' ')
+print(' ')
 
+print('------ update whitelist ------')
+print(' ')
 # get id and update
 now = datetime.datetime.now()
 whitelist_id = result['whitelist']['id']
