@@ -39,3 +39,4 @@ value = 'updated whitelist - {}'.format(now)
 #   def update_whitelist_by_advertiser(self, org_id=0, ad_id=0, whitelist_id=0, op='REPLACE', path='/name', value=''):
 result = client.update_whitelist_by_advertiser(7000095690, 7000095690, whitelist_id, op, path, value)
 print(result)
+

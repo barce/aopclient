@@ -10,6 +10,7 @@ import requests
 import time
 import os
 import urllib3
+import sys
 from urllib3._collections import HTTPHeaderDict
 
 
@@ -36,6 +37,7 @@ class AOLClient:
   headers = None
   authorized_headers = None
   token = None
+  curl_conversion = None
 
 
   def __init__(self):
@@ -95,7 +97,7 @@ class AOLClient:
     json_response = json.loads(response.text)
     print(json_response)
     self.token = json_response['access_token']
-    self.authorized_headers = {'Authorization': "Bearer " + self.token}
+    self.authorized_headers = {'Authorization': "Bearer " + self.token.encode('ascii')}
 
     self.authorized_headers['Content-Type'] = 'application/json'
     self.authorized_headers['x-api-key'] = self.api_key
@@ -323,9 +325,23 @@ class AOLClient:
     return json.loads(response.text)
 
 
+  def _convert_to_curl(self, method, url, headers, data):
+    curl_conversion = "curl -X {} {} ".format(method, url) 
+    if sys.version_info < (3, 0):
+      for key, value in headers.iteritems():
+        curl_conversion = curl_conversion + " -H '{}: {}'".format(key, value)
+    else: 
+      for key, value in headers.items():
+        curl_conversion = curl_conversion + " -H '{}: {}'".format(key, value)
+    curl_conversion = curl_conversion + " -d " + "{}".format(json.dumps(data))
+    return curl_conversion
       
   def _send_request(self, url, headers, data=None, method="GET"):
       response = None
+      self.curl_conversion = self._convert_to_curl(method, url, headers, data)
+      print('--- self.curl_conversion ---')
+      print(self.curl_conversion)
+      print('--- self.curl_conversion ---')
       if method == "GET":
           response = requests.get(url, headers=headers, verify=True)
 
@@ -349,6 +365,9 @@ class AOLClient:
           print('--- data ---')
           print(data)
           print('--- data ---')
+          print('--- url ---')
+          print(url)
+          print('--- url ---')
 
       print('--- response.status_code: {} ---'.format(response.status_code))
       codes = [200,201]
