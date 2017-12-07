@@ -97,7 +97,8 @@ class AOLClient:
     json_response = json.loads(response.text)
     print(json_response)
     self.token = json_response['access_token']
-    self.authorized_headers = {'Authorization': "Bearer " + self.token.encode('ascii')}
+    # self.authorized_headers = {'Authorization': "Bearer " + self.token.encode('ascii')}
+    self.authorized_headers = {'Authorization': "Bearer " + self.token}
 
     self.authorized_headers['Content-Type'] = 'application/json'
     self.authorized_headers['x-api-key'] = self.api_key
@@ -222,12 +223,14 @@ class AOLClient:
     return json.loads(response.text)
 
   def update_blacklist_by_advertiser(self, org_id=0, ad_id=0, blacklist_id=0, op='REPLACE', path='/name', value=''):
-    url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/blacklists".format(self.one_host, org_id, ad_id, blacklist_id)
+    url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/blacklists/{3}".format(self.one_host, org_id, ad_id, blacklist_id)
     data = {}
     data['op'] = op
     data['path'] = path
     data['value'] = value
-    response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data))
+    data_list = []
+    data_list.append(data)
+    response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data_list))
     return json.loads(response.text)
     
   def update_tactics_blacklist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, blacklist_id=0):
@@ -282,12 +285,14 @@ class AOLClient:
     return json.loads(response.text)
 
   def update_whitelist_by_advertiser(self, org_id=0, ad_id=0, whitelist_id=0, op='REPLACE', path='/name', value=''):
-    url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/whitelists".format(self.one_host, org_id, ad_id, whitelist_id)
+    url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/whitelists/{3}".format(self.one_host, org_id, ad_id, whitelist_id)
     data = {}
     data['op'] = op
     data['path'] = path
     data['value'] = value
-    response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data))
+    data_list = []
+    data_list.append(data)
+    response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data_list))
     return json.loads(response.text)
 
   def update_tactics_whitelist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, whitelist_id=0):
