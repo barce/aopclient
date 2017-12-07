@@ -227,7 +227,7 @@ class AOLClient:
     data['op'] = op
     data['path'] = path
     data['value'] = value
-    response = self._send_request(url, self.authorized_headers, method="PUT", data=json.dumps(data))
+    response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data))
     return json.loads(response.text)
     
   def update_tactics_blacklist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, blacklist_id=0):
@@ -287,7 +287,7 @@ class AOLClient:
     data['op'] = op
     data['path'] = path
     data['value'] = value
-    response = self._send_request(url, self.authorized_headers, method="PUT", data=json.dumps(data))
+    response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data))
     return json.loads(response.text)
 
   def update_tactics_whitelist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, whitelist_id=0):
@@ -368,6 +368,9 @@ class AOLClient:
           print('--- url ---')
           print(url)
           print('--- url ---')
+
+      if method == "PATCH":
+          response = requests.patch(url, headers=headers, verify=True, data=data)
 
       print('--- response.status_code: {} ---'.format(response.status_code))
       codes = [200,201]
