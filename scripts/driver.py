@@ -74,3 +74,96 @@ print(' ')
 print(' ')
 print(' ')
 
+print('------ update inventory sources ------')
+print(' ')
+
+now = datetime.datetime.now()
+
+print(' ')
+print(' ')
+print(' ')
+print('------ get tactics by campaign ------')
+print(' ')
+
+orgs = client.get_organizations()
+print('organizations: ')
+print(orgs)
+
+print(' ')
+print(' ')
+print(' ')
+# org_id: 7000095690
+ads = client.get_advertisers(7000095690)
+print('advertisers: ')
+print(ads)
+
+camps = client.get_campaigns(7000095690)
+
+print(' ')
+print(' ')
+print(' ')
+print(' ')
+print('campaigns')
+print(camps)
+
+# campaigns: 131211833, 131210756
+# ad_id: 7000095690
+tactics = client.get_tactics_by_campaign(7000095690, 7000095690, 131211833)
+print(' ')
+print(' ')
+print(' ')
+print(' ')
+print('tactics')
+print(tactics)
+
+# tactics: 439356, 439354
+isources = client.get_inventory_sources_by_tactic(7000095690, 7000095690, 131211833, 439356)
+print(' ')
+print(' ')
+print(' ')
+print(' ')
+print('isources')
+print(isources)
+a_sources = isources['data']
+a_sources_ids = []
+for source in a_sources:
+  print(source['id'])
+  a_sources_ids.append(source['id'])
+print(a_sources_ids)
+
+avails = client.get_avails_by_tactic(7000095690, 7000095690, 131211833, 439356)
+print(' ')
+print(' ')
+print(' ')
+print(' ')
+print('avails')
+print(avails)
+a_avails = avails['data']
+a_avails_ids = []
+for avail in a_avails:
+  print(avail['id'])
+  a_avails_ids.append(avail['id'])
+print(a_avails_ids)
+
+print(' ')
+print(' ')
+print(' ')
+print(' ')
+print(' ')
+print(' ')
+print('update the list of inventory sources')
+updated_list = client.update_inventory_sources_by_tactic(7000095690, 7000095690, 131211833, 439356,[1, 2, 9])
+print(' ')
+print(' ')
+print('updated_list:')
+print(updated_list)
+print(' ')
+print(' ')
+print(' ')
+print('restore list')
+# [1, 2, 9, 17, 7, 18, 16, 4, 12, 13, 10, 8, 6, 5, 19]
+updated_list = client.update_inventory_sources_by_tactic(7000095690, 7000095690, 131211833, 439356,[1, 2, 9, 17, 7, 18, 16, 4, 12, 13, 10, 8, 6, 5, 19])
+print(' ')
+print(' ')
+print('restored list::')
+print(updated_list)
