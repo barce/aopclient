@@ -163,10 +163,10 @@ class AOLClient:
 
   def assign_deal_assignments(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, deals=[]):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/dealassignments".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
-    data = HTTPHeaderDict()
+    deal_data = []
     for deal in deals:
-        data.add('dealAssignmentId', str(deal))    
-    response = self._send_request(url, self.authorized_headers, method="POST", data=data)
+      deal_data.append(deal)
+    response = self._send_request(url, self.authorized_headers, method="POST", data=json.dumps(deal_data))
     print("{}".format(json.loads(response.text)))
     return json.loads(response.text)
 
