@@ -233,7 +233,7 @@ class AOLClient:
     response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data_list))
     return json.loads(response.text)
     
-  def update_tactics_blacklist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, blacklist_id=0):
+  def update_tactics_blacklist(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, blacklist_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/blacklists".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
     data = {}
     data['blacklistid'] = blacklist_id
@@ -295,11 +295,11 @@ class AOLClient:
     response = self._send_request(url, self.authorized_headers, method="PATCH", data=json.dumps(data_list))
     return json.loads(response.text)
 
-  def update_tactics_whitelist(self, org_id=0, ad_id=0, cammpaign_id=0, tactic_id=0, whitelist_id=0):
+  def update_tactics_whitelist(self, org_id=0, ad_id=0, campaign_id=0, tactic_id=0, whitelist_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}/tactics/{4}/whitelists".format(self.one_host, org_id, ad_id, campaign_id, tactic_id)
     data = {}
     data['whitelistid'] = whitelist_id
-    response = self._send_request(url, self.authorized_headers, method="PUT", data=json.dump(data))
+    response = self._send_request(url, self.authorized_headers, method="PUT", data=json.dumps(data))
 
   def get_apps_by_whitelist(self, org_id=0, ad_id=0, whitelist_id=0, limit=0, offset=0):
     url = "https://{0}/advertiser/inventory-management/v1/organizations/{1}/advertisers/{2}/whitelists/{3}/apps".format(self.one_host, org_id, ad_id, whitelist_id, limit, offset)
