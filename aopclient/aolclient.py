@@ -137,6 +137,9 @@ class AOLClient:
   def get_campaigns_by_advertiser_by_campaign(self, org_id=0, ad_id=0, campaign_id=0):
     url = "https://{0}/advertiser/campaign-management/v1/organizations/{1}/advertisers/{2}/campaigns/{3}".format(self.one_host, org_id, ad_id, campaign_id)
     response = self._send_request(url, self.authorized_headers, method="GET")
+    print "1 @#$#@$@#$#@$#@$#@$#@$"
+    print response
+    print "#$%$#%$#%$#%$#%$#%#$%$#"
     return json.loads(response.text)
 
   def get_tactics_by_campaign(self, org_id=0, ad_id=0, campaign_id=0):
