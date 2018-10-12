@@ -1,6 +1,9 @@
 # aopclient
 Client for the AOP
 
+# To Install
+pip install aopclient
+
 # To run tests:
 Clone this repository, and then:
 cd aopclient
