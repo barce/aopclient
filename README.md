@@ -1,4 +1,5 @@
 # aopclient
+WARNING: Obsolete code - does not work.
 Client for the AOP
 
 # To Install
